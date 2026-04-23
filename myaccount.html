@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Account - AgroTECH</title>
+  <style>
+    :root {
+      --green-dark: #1b5e20;
+      --green-light: #66bb6a;
+      --yellow-soft: #f0f7da;
+      --brown-earth: #6d4c41;
+      --blue-soft: #a6c8e0;
+      --white: #ffffff;
+    }
+
+    /* Animated background */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #1b5e20, #388e3c, #66bb6a);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 30px;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      color: var(--white);
+      padding: 20px 30px;
+      font-size: 2rem;
+      font-weight: bold;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      margin-bottom: 35px;
+      text-align: center;
+      width: 90%;
+      max-width: 1000px;
+      letter-spacing: 1px;
+    }
+
+    main {
+      width: 90%;
+      max-width: 850px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      padding: 40px 45px;
+      color: #fff;
+      transition: transform 0.3s ease;
+      animation: fadeIn 1s ease;
+    }
+
+    main:hover {
+      transform: scale(1.02);
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--white);
+      text-shadow: 0 0 8px rgba(255,255,255,0.4);
+    }
+
+    /* Profile section */
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .profile-pic {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: url('https://via.placeholder.com/130') center/cover no-repeat;
+      border: 4px solid var(--yellow-soft);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    }
+
+    .profile-info {
+      text-align: center;
+    }
+
+    .profile-info h2 {
+      margin: 10px 0 5px;
+      font-size: 1.6rem;
+    }
+
+    .profile-info p {
+      color: var(--yellow-soft);
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    .section h3 {
+      text-align: center;
+      color: var(--yellow-soft);
+      font-size: 1.4rem;
+      margin-bottom: 25px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 8px;
+    }
+
+    /* Account details grid */
+    .account-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: var(--yellow-soft);
+      letter-spacing: 0.6px;
+    }
+
+    .value {
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--brown-earth);
+      border-radius: 12px;
+      padding: 10px 15px;
+      font-weight: 600;
+      border: 2px solid var(--green-light);
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 12px;
+      border: 2px solid var(--green-light);
+      display: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--brown-earth);
+      background: rgba(255, 255, 255, 0.9);
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      box-shadow: 0 0 10px var(--green-light);
+      outline: none;
+    }
+
+    #editToggle {
+      display: none;
+    }
+
+    #editToggle:checked ~ main .account-details .value {
+      display: none;
+    }
+    #editToggle:checked ~ main .account-details input {
+      display: block;
+    }
+
+    /* Button styles */
+    .btn-group {
+      text-align: center;
+      margin-top: 35px;
+    }
+
+    .btn {
+      background: var(--green-light);
+      border: none;
+      color: #fff;
+      padding: 12px 32px;
+      margin: 0 10px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .btn.cancel {
+      background: var(--brown-earth);
+    }
+    .btn.cancel:hover {
+      background: #4e342e;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .account-details {
+        grid-template-columns: 1fr;
+      }
+      main {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>🌱 AgroTECH - My Account</header>
+
+  <input type="checkbox" id="editToggle" />
+
+  <main>
+    <h2>Profile Overview</h2>
+
+    <section class="profile">
+      <div class="profile-pic"></div>
+      <div class="profile-info">
+        <h2 id="displayName">Madhur Pratap Singh</h2>
+        <p id="displayEmail">madhurpratapsingh2005@gmail.com</p>
+      </div>
+    </section>
+
+    <section class="section account-section">
+      <h3>Account Details</h3>
+      <div class="account-details">
+        <div>
+          <label for="fullName">Full Name</label>
+          <div class="value" id="nameDisplay">Madhur Pratap Singh</div>
+          <input type="text" id="fullName" value="Madhur Pratap Singh" />
+        </div>
+        <div>
+          <label for="email">Email Address</label>
+          <div class="value" id="emailDisplay">madhurpratapsingh2005@gmail.com</div>
+          <input type="email" id="email" value="madhurpratapsingh2005@gmail.com" />
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <div class="value" id="phoneDisplay">8127059423</div>
+          <input type="tel" id="phone" value="8127059423" />
+        </div>
+        <div>
+          <label for="location">Location</label>
+          <div class="value" id="locationDisplay">Indore, MP</div>
+          <input type="text" id="location" value="Indore, MP" />
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <label for="editToggle" class="btn" id="editBtn">Edit</label>
+        <label for="editToggle" class="btn cancel" id="cancelBtn" style="display:none;">Cancel</label>
+        <button type="submit" class="btn" id="saveBtn" style="display:none;">Save</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const editToggle = document.getElementById('editToggle');
+    const editBtn = document.getElementById('editBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.getElementById('saveBtn');
+
+    editToggle.addEventListener('change', () => {
+      if (editToggle.checked) {
+        editBtn.style.display = 'none';
+        cancelBtn.style.display = 'inline-block';
+        saveBtn.style.display = 'inline-block';
+      } else {
+        editBtn.style.display = 'inline-block';
+        cancelBtn.style.display = 'none';
+        saveBtn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

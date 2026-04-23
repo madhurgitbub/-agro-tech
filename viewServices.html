@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Services - AgroTECH</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f9f4;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(90deg, #2e7d32, #66bb6a);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .search-bar input {
+      width: 60%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px 0 0 25px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-bar input:focus {
+      border-color: #4caf50;
+    }
+
+    .search-bar button {
+      padding: 15px 25px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 0 25px 25px 0;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .search-bar button:hover {
+      background: #388e3c;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .service-image {
+      height: 200px;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .service-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-content {
+      padding: 25px;
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .service-category {
+      display: inline-block;
+      background: #e8f5e8;
+      color: #4CAF50;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .service-description {
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .service-message {
+      color: #444;
+      margin-bottom: 15px;
+      font-style: italic;
+      background: #f8f9fa;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .service-contact {
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .service-contact strong {
+      color: #2e7d32;
+    }
+
+    .service-price {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    .service-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+
+    .btn-secondary:hover {
+      background: #e9ecef;
+    }
+
+    .no-services {
+      text-align: center;
+      color: #666;
+      font-size: 1.2rem;
+      margin-top: 50px;
+      grid-column: 1 / -1;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 30px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 125, 50, 0.5);
+    }
+
+    .back-btn:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .search-bar input {
+        width: 70%;
+      }
+      .service-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌱 AgroTECH Services</h1>
+  </header>
+
+  <div class="container">
+    <a href="home.html" class="back-btn">← Back to Home</a>
+    <h1>Available Services</h1>
+    <p class="subtitle">Discover agricultural services from trusted providers</p>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search services...">
+      <button onclick="searchServices()">Search</button>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+      <!-- Services will be loaded here -->
+    </div>
+  </div>
+
+  <script>
+    function loadServices() {
+      const defaultServices = [
+        {
+          id: 101,
+          name: 'Mahindra Tractor',
+          category: 'Machinery',
+          price: 800,
+          description: 'Powerful tractor for farming needs.',
+          contactEmail: 'tractor@agrotech.com',
+          contactPhone: '+91-9000000001',
+          contactMessage: 'Call now to book this tractor for your field.',
+          image: 'https://5.imimg.com/data5/SELLER/Default/2021/6/CX/WL/RI/30912792/mahindra-tractor-yuvraj-bumper-1000x1000.jpg',
+          verified: true,
+          active: true
+        },
+        {
+          id: 102,
+          name: 'John Deere Tractor',
+          category: 'Machinery',
+          price: 1000,
+          description: 'Reliable tractor with high efficiency.',
+          contactEmail: 'john@agrotech.com',
+          contactPhone: '+91-9000000002',
+          contactMessage: 'Fast delivery and expert support available.',
+          image: 'https://cpimg.tistatic.com/10029058/b/4/John-deere-Tractors..jpg',
+          verified: true,
+          active: true
+        },
+        {
+          id: 103,
+          name: 'Combine Harvester',
+          category: 'Machinery',
+          price: 1200,
+          description: 'Efficient harvester for large-scale farming.',
+          contactEmail: 'harvester@agrotech.com',
+          contactPhone: '+91-9000000003',
+          contactMessage: 'Perfect for harvesting a large area quickly.',
+          image: 'https://5.imimg.com/data5/WC/IE/YH/ANDROID-86040604/prod-20200810-2031297210080910753376724-jpg-1000x1000.jpg',
+          verified: true,
+          active: true
+        },
+        {
+          id: 104,
+          name: 'Plough Machine',
+          category: 'Machinery',
+          price: 8000,
+          description: 'Durable plough for soil preparation.',
+          contactEmail: 'plough@agrotech.com',
+          contactPhone: '+91-9000000004',
+          contactMessage: 'Call now and prepare your field on time.',
+          image: 'https://www.fieldking.com/blogs/wp-content/uploads/2024/09/Ploughing.jpg',
+          verified: true,
+          active: true
+        }
+      ];
+
+      let services = JSON.parse(localStorage.getItem('agrotech_services') || '[]');
+      if (services.length === 0) {
+        services = defaultServices;
+        localStorage.setItem('agrotech_services', JSON.stringify(services));
+      }
+
+      services = services.filter(service => service.active !== false);
+
+      const servicesGrid = document.getElementById('servicesGrid');
+      
+      if (services.length === 0) {
+        servicesGrid.innerHTML = '<div class="no-services"><i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 20px;"></i><p>No services available at the moment. Be the first to add one!</p></div>';
+        return;
+      }
+      
+      servicesGrid.innerHTML = services.map(service => `
+        <div class="service-card">
+          <div class="service-image">
+            <img src="${service.image}" alt="${service.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; background: #f0f0f0;">
+              <i class="fas fa-image" style="font-size: 3rem; color: #ccc;"></i>
+            </div>
+          </div>
+          <div class="service-content">
+            <h3 class="service-title">${service.name}</h3>
+            <span class="service-category">${service.category}</span>
+            <p class="service-description">${service.description}</p>
+            <p class="service-message">${service.contactMessage ? service.contactMessage : ''}</p>
+            <div class="service-contact">Call: <strong>${service.contactPhone ? service.contactPhone : 'Not provided'}</strong></div>
+            <div class="service-price">₹${service.price}</div>
+            <div class="service-actions">
+              <a href="contactProvider.html?id=${service.id}" class="btn btn-primary">Contact Provider</a>
+              <button onclick="addToFavorites(${service.id})" class="btn btn-secondary">
+                <i class="fas fa-heart"></i> Favorite
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function searchServices() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const serviceCards = document.querySelectorAll('.service-card');
+
+      serviceCards.forEach(card => {
+        const title = card.querySelector('.service-title').textContent.toLowerCase();
+        const description = card.querySelector('.service-description').textContent.toLowerCase();
+        const category = card.querySelector('.service-category').textContent.toLowerCase();
+
+        if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function addToFavorites(serviceId) {
+      alert('Added to favorites! (This is a placeholder - favorites functionality can be implemented)');
+    }
+
+    // Load services when page loads
+    loadServices();
+
+    // Handle URL search parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam) {
+      document.getElementById('searchInput').value = searchParam;
+      searchServices();
+    }
+
+    // Real-time search
+    document.getElementById('searchInput').addEventListener('input', searchServices);
+  </script>
+</body>
+</html>

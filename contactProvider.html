@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Provider - AgroTECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f9f4;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #2e7d32, #66bb6a);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+      align-items: center;
+    }
+    .top-bar h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #2e7d32;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    }
+    .back-btn:hover {
+      background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 125, 50, 0.5);
+    }
+    .back-btn:active {
+      transform: translateY(0);
+    }
+    .service-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .service-summary img {
+      width: 100%;
+      border-radius: 16px;
+      max-height: 320px;
+      object-fit: cover;
+    }
+    .service-info h2 {
+      color: #2e7d32;
+      margin-bottom: 15px;
+    }
+    .service-info p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+      color: #555;
+    }
+    .contact-details {
+      display: grid;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #e0e0e0;
+    }
+    .contact-item i {
+      font-size: 1.3rem;
+      color: #2e7d32;
+    }
+    .contact-form {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #e0e0e0;
+    }
+    .contact-form h3 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .contact-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      margin-bottom: 18px;
+      font-size: 15px;
+      outline: none;
+    }
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+    .contact-form button {
+      padding: 15px 30px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .contact-form button:hover {
+      transform: translateY(-2px);
+      background: #45a049;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: #666;
+      font-size: 1.2rem;
+    }
+    @media (max-width: 900px) {
+      .service-summary {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Contact Service Provider</h1>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="top-bar">
+        <div>
+          <h1 id="serviceName">Loading...</h1>
+          <p id="serviceCategory"></p>
+        </div>
+        <a href="viewServices.html" class="back-btn">← Back to Services</a>
+      </div>
+
+      <div id="serviceContent"></div>
+    </div>
+  </div>
+
+  <script>
+    function showNoService() {
+      document.getElementById('serviceName').textContent = 'Service not found';
+      document.getElementById('serviceContent').innerHTML = '<div class="empty-state">The requested service could not be found. Please return to the services page and try again.</div>';
+    }
+
+    function loadService() {
+      const params = new URLSearchParams(window.location.search);
+      const serviceId = params.get('id');
+      if (!serviceId) {
+        showNoService();
+        return;
+      }
+
+      const services = JSON.parse(localStorage.getItem('agrotech_services') || '[]');
+      const service = services.find(item => item.id.toString() === serviceId.toString());
+      if (!service) {
+        showNoService();
+        return;
+      }
+
+      document.getElementById('serviceName').textContent = service.name;
+      document.getElementById('serviceCategory').textContent = service.category;
+
+      document.getElementById('serviceContent').innerHTML = `
+        <div class="service-summary">
+          <div>
+            <img src="${service.image}" alt="${service.name}">
+          </div>
+          <div class="service-info">
+            <h2>Service Details</h2>
+            <p>${service.description}</p>
+            <p><strong>Price:</strong> ₹${service.price}</p>
+            <div class="contact-details">
+              <div class="contact-item"><i class="fas fa-envelope"></i><span>${service.contactEmail || 'Not provided'}</span></div>
+              <div class="contact-item"><i class="fas fa-phone"></i><span>${service.contactPhone || 'Not provided'}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <h3>Send a message to the provider</h3>
+          <label for="visitorName">Your Name</label>
+          <input type="text" id="visitorName" placeholder="Enter your name" required>
+
+          <label for="visitorEmail">Your Email</label>
+          <input type="email" id="visitorEmail" placeholder="Enter your email" required>
+
+          <label for="visitorMessage">Message</label>
+          <textarea id="visitorMessage" placeholder="Write your question or request here" required></textarea>
+
+          <button onclick="sendMessage(${service.id})">Send Message</button>
+        </div>
+      `;
+    }
+
+    function sendMessage(serviceId) {
+      const service = JSON.parse(localStorage.getItem('agrotech_services') || '[]').find(item => item.id.toString() === serviceId.toString());
+      if (!service) {
+        showNoService();
+        return;
+      }
+
+      const name = document.getElementById('visitorName').value.trim();
+      const email = document.getElementById('visitorEmail').value.trim();
+      const message = document.getElementById('visitorMessage').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill all contact details before sending.');
+        return;
+      }
+
+      const request = {
+        id: Date.now(),
+        serviceId: service.id,
+        serviceName: service.name,
+        providerEmail: service.contactEmail || 'Not provided',
+        providerPhone: service.contactPhone || 'Not provided',
+        buyerName: name,
+        buyerEmail: email,
+        buyerMessage: message,
+        requestTime: new Date().toISOString()
+      };
+
+      const requests = JSON.parse(localStorage.getItem('agrotech_requests') || '[]');
+      requests.push(request);
+      localStorage.setItem('agrotech_requests', JSON.stringify(requests));
+
+      alert('Request sent! The provider will be able to view it on the requests page.');
+
+      const subject = encodeURIComponent(`Inquiry about ${service.name}`);
+      const body = encodeURIComponent(`Hello,
+
+My name is ${name}.
+Email: ${email}
+
+I am interested in your service "${service.name}".
+
+Message:
+${message}
+
+Please contact me back at your earliest convenience.
+
+Thank you.`);
+      const recipient = service.contactEmail || 'support@agrotech.com';
+      window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    }
+
+    loadService();
+  </script>
+</body>
+</html>

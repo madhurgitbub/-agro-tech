@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Your Service - AgroTECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    header {
+      background: linear-gradient(90deg, rgba(46, 125, 50, 0.95), rgba(102, 187, 106, 0.95));
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      flex: 1;
+    }
+
+    .form-section {
+      margin-bottom: 35px;
+    }
+
+    .form-section h2 {
+      font-size: 1.3rem;
+      color: #2e7d32;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #e8f5e9;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+      color: #2e7d32;
+      font-size: 0.95rem;
+    }
+
+    label i {
+      margin-right: 5px;
+      color: #ff9800;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #2e7d32;
+      box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+      background: #f8f9fa;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: 2px dashed #2e7d32;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #f8f9fa;
+      transition: all 0.3s ease;
+    }
+
+    input[type="file"]:hover {
+      border-color: #4caf50;
+      background: #e8f5e9;
+    }
+
+    .file-info {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #ff9800, #ffb74d);
+      color: white;
+      grid-column: 1;
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #f57c00, #ff9800);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-back {
+      background: linear-gradient(135deg, #2e7d32, #4caf50);
+      color: white;
+      text-decoration: none;
+      grid-column: 2;
+      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-back:hover {
+      background: linear-gradient(135deg, #1b5e20, #2e7d32);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+    }
+
+    .info-card {
+      background: #e8f5e9;
+      border-left: 5px solid #2e7d32;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #2e7d32;
+      display: flex;
+      gap: 10px;
+    }
+
+    .info-card i {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .form-hint {
+      font-size: 0.85rem;
+      color: #999;
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 25px;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .button-group {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-submit {
+        grid-column: 1;
+      }
+
+      .btn-back {
+        grid-column: 1;
+      }
+
+      .form-section h2 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>
+      <i class="fas fa-leaf"></i>
+      Add Your Service
+    </h1>
+    <p>Showcase your agricultural products or services to thousands of buyers</p>
+  </header>
+
+  <div class="container">
+    
+    <form id="serviceForm">
+      
+      <div class="form-section">
+        <h2><i class="fas fa-box"></i> Service Details</h2>
+        
+        <div class="info-card">
+          <i class="fas fa-info-circle"></i>
+          <div>Make sure to provide accurate details about your service to attract more customers</div>
+        </div>
+
+        <div class="form-group">
+          <label for="name"><i class="fas fa-tag"></i> Service/Product Name *</label>
+          <input type="text" id="name" name="name" placeholder="e.g. Tractor Rental, Organic Fertilizer, Seeds" required>
+          <div class="form-hint">📝 Make it descriptive so customers can find you easily</div>
+        </div>
+
+        <div class="form-group">
+          <label for="category"><i class="fas fa-list"></i> Category *</label>
+          <select id="category" name="category" required>
+            <option value="">-- Select Category --</option>
+            <option value="machinery">🚜 Machinery & Equipment</option>
+            <option value="fertilizer">🌾 Fertilizer & Nutrients</option>
+            <option value="transport">🚚 Transport & Logistics</option>
+            <option value="seeds">🌱 Seeds & Saplings</option>
+            <option value="pesticide">🧪 Pesticides & Insecticides</option>
+            <option value="consulting">💼 Consulting Services</option>
+            <option value="other">📦 Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="price"><i class="fas fa-rupee-sign"></i> Price (₹) *</label>
+          <input type="number" id="price" name="price" placeholder="Enter price or rate" step="0.01" required>
+          <div class="form-hint">💡 Be competitive! Check similar services for pricing</div>
+        </div>
+
+        <div class="form-group">
+          <label for="description"><i class="fas fa-align-left"></i> Description *</label>
+          <textarea id="description" name="description" placeholder="Write detailed information about your service. Include benefits, specifications, delivery details, etc." required></textarea>
+          <div class="form-hint">📋 More details = More customers interested!</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2><i class="fas fa-user"></i> Your Contact Information</h2>
+
+        <div class="form-group">
+          <label for="contactName"><i class="fas fa-id-card"></i> Your Full Name *</label>
+          <input type="text" id="contactName" name="contactName" placeholder="Your name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="contactEmail"><i class="fas fa-envelope"></i> Your Email *</label>
+          <input type="email" id="contactEmail" name="contactEmail" placeholder="your.email@example.com" required>
+          <div class="form-hint">✉️ Buyers will use this to contact you</div>
+        </div>
+
+        <div class="form-group">
+          <label for="contactPhone"><i class="fas fa-phone"></i> Phone Number *</label>
+          <input type="tel" id="contactPhone" name="contactPhone" placeholder="Enter your phone number" required>
+          <div class="form-hint">📞 Must be valid for verification</div>
+        </div>
+
+        <div class="form-group">
+          <label for="contactMessage"><i class="fas fa-comments"></i> Message for Buyers</label>
+          <textarea id="contactMessage" name="contactMessage" placeholder="Add any additional information buyers should know, such as bulk discounts, delivery options, payment methods, etc."></textarea>
+          <div class="form-hint">💬 Optional but recommended!</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2><i class="fas fa-image"></i> Upload Image</h2>
+
+        <div class="form-group">
+          <label for="image"><i class="fas fa-picture"></i> Service/Product Image *</label>
+          <input type="file" id="image" name="image" accept="image/*" required>
+          <div class="file-info">
+            <i class="fas fa-info-circle"></i>
+            <span>Supported: JPG, PNG, GIF, WebP (Max 5MB)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-arrow-right"></i> Submit Service
+        </button>
+        <a href="home.html" class="btn-back">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('serviceForm');
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('contactEmail').value;
+      
+      if (!name || !email) {
+        alert('❌ Please fill in all required fields');
+        return;
+      }
+      
+      alert('✓ Service submitted successfully! Admin will verify and activate it soon.');
+      form.reset();
+      
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
+    document.getElementById('serviceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const category = document.getElementById('category').value;
+      const price = document.getElementById('price').value;
+      const description = document.getElementById('description').value;
+      const contactEmail = document.getElementById('contactEmail').value;
+      const contactPhone = document.getElementById('contactPhone').value;
+      const contactMessage = document.getElementById('contactMessage').value;
+      const imageFile = document.getElementById('image').files[0];
+      
+      if (!name || !category || !price || !description || !contactEmail || !contactPhone || !contactMessage || !imageFile) {
+        alert('Please fill all fields');
+        return;
+      }
+      
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const imageData = e.target.result;
+        
+        const service = {
+          id: Date.now(),
+          name: name,
+          category: category,
+          price: parseFloat(price),
+          description: description,
+          contactEmail: contactEmail,
+          contactPhone: contactPhone,
+          contactMessage: contactMessage,
+          image: imageData,
+          active: true,
+          verified: true,
+          dateAdded: new Date().toISOString()
+        };
+        
+        // Get existing services from localStorage
+        let services = JSON.parse(localStorage.getItem('agrotech_services') || '[]');
+        services.push(service);
+        
+        // Save back to localStorage
+        localStorage.setItem('agrotech_services', JSON.stringify(services));
+        
+        alert('Service added successfully! It will be visible on the View Services page.');
+        
+        // Reset form
+        document.getElementById('serviceForm').reset();
+      };
+      
+      reader.readAsDataURL(imageFile);
+    });
+  </script>
+</body>
+</html>
